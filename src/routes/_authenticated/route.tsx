@@ -24,6 +24,7 @@ const NAV = [
   { to: "/eventos", label: "Eventos", icon: "♫" },
   { to: "/guest-list", label: "Guest list", icon: "◉" },
   { to: "/promoters", label: "Promoters", icon: "★" },
+  { to: "/equipe", label: "Equipe", icon: "☰" },
 ];
 
 function Layout() {
