@@ -1,24 +1,49 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  ssr: false,
+  beforeLoad: async () => {
+    // Client-side: landing redireciona para o painel se já houver sessão.
+    return {};
+  },
+  component: Landing,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Landing() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background p-6">
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 15% 20%, rgba(139,92,246,0.20), transparent 60%), radial-gradient(50% 45% at 85% 80%, rgba(236,72,153,0.16), transparent 60%)",
+        }}
       />
-    </div>
+      <div className="relative max-w-2xl text-center">
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-3xl text-primary-foreground shadow-2xl">
+          ♫
+        </div>
+        <h1 className="text-5xl font-bold tracking-tight text-foreground">
+          Casa Noturna <span className="text-primary">CRM</span>
+        </h1>
+        <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
+          Gerencie clientes, comandas, eventos e a guest list — tudo em um só lugar para a equipe da casa.
+        </p>
+        <div className="mt-8 flex justify-center gap-3">
+          <a
+            href="/auth?next=/dashboard"
+            className="rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Entrar no painel
+          </a>
+          <a
+            href="/auth?next=/dashboard"
+            className="rounded-lg border border-input bg-background px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+          >
+            Criar acesso
+          </a>
+        </div>
+      </div>
+    </main>
   );
 }
