@@ -13,11 +13,10 @@ export const grantFirstAdminFn = createServerFn({ method: "POST" })
       .eq("role", "admin");
     if (countError) throw countError;
     if ((count ?? 0) > 0) return { granted: false };
-    const { error } = await supabaseAdmin
-      .from("user_roles")
-      .insert({ user_id: context.userId, role: "admin" })
-      .onConflict("user_id, role")
-      .ignore();
+    const { error } = await supabaseAdmin.from("user_roles").upsert(
+      { user_id: context.userId, role: "admin" },
+      { onConflict: "user_id,role", ignoreDuplicates: true },
+    );
     if (error) throw error;
     return { granted: true };
   });
@@ -35,11 +34,10 @@ export const gerenciarRoleFn = createServerFn({ method: "POST" })
     });
     if (!isAdmin) throw new Error("Apenas admin pode gerenciar papéis.");
     if (data.grant) {
-      const { error } = await supabaseAdmin
-        .from("user_roles")
-        .insert({ user_id: data.user_id, role: data.role })
-        .onConflict("user_id, role")
-        .ignore();
+      const { error } = await supabaseAdmin.from("user_roles").upsert(
+        { user_id: data.user_id, role: data.role },
+        { onConflict: "user_id,role", ignoreDuplicates: true },
+      );
       if (error) throw error;
     } else {
       const { error } = await supabaseAdmin
@@ -62,19 +60,16 @@ export const listarUsuariosRolesFn = createServerFn({ method: "GET" })
     });
     if (!isAdmin) throw new Error("Apenas admin pode listar papéis.");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data: profiles, error } = await supabaseAdmin
-      .from("auth.users")
-      .select("id, email")
-      .order("email");
+    const { data: page, error } = await supabaseAdmin.auth.admin.listUsers();
     if (error) throw error;
     const { data: roles } = await supabaseAdmin.from("user_roles").select("user_id, role");
     const byUser = new Map<string, string[]>();
     for (const r of roles ?? []) {
       byUser.set(r.user_id, [...(byUser.get(r.user_id) ?? []), r.role]);
     }
-    return (profiles ?? []).map((u: any) => ({
+    return (page.users ?? []).map((u) => ({
       id: u.id,
-      email: u.email,
+      email: u.email ?? u.phone ?? "",
       roles: byUser.get(u.id) ?? [],
     }));
   });
