@@ -17,8 +17,9 @@ export const Route = createFileRoute("/.lovable/oauth/consent")({
     const authorizationId = new URLSearchParams(location.search).get("authorization_id")!;
     const { data, error } = await supabase.auth.oauth.getAuthorizationDetails(authorizationId);
     if (error) throw error;
-    const immediate = data?.redirect_url ?? data?.redirect_to;
-    if (immediate && !data?.client) throw redirect({ href: immediate });
+    // data is OAuthAuthorizationDetails | OAuthRedirect; when it's an OAuthRedirect
+    // the user already consented and we can bounce immediately.
+    if (data && "redirect_url" in data) throw redirect({ href: data.redirect_url });
     return data;
   },
   component: Consent,
@@ -41,7 +42,7 @@ function Consent() {
   const [error, setError] = useState<string | null>(null);
 
   const clientName = details?.client?.name ?? "o aplicativo";
-  const email = details?.account?.email ?? details?.client?.name ?? "";
+  const email = details?.user?.email ?? "";
 
   async function decide(approve: boolean) {
     setBusy(true);
@@ -53,7 +54,7 @@ function Consent() {
       setError(err.message);
       return;
     }
-    const target = data?.redirect_url ?? data?.redirect_to;
+    const target = data?.redirect_url;
     if (!target) {
       setBusy(false);
       setError("Nenhum redirecionamento retornado pelo servidor de autorização.");
