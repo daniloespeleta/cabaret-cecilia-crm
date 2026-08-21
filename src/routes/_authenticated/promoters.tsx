@@ -24,7 +24,7 @@ function PromotersPage() {
   return (
     <div>
       <header className="mb-6">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">Promoters</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-foreground">Promoters</h1>
         <p className="mt-1 text-muted-foreground">Desempenho: convidados presentes e comissão estimada por entrada.</p>
       </header>
 

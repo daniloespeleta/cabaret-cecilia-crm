@@ -11,9 +11,9 @@
   },
   "mcp": {
     "server": {
-      "name": "casa-noturna-crm",
-      "version": "0.1.0",
-      "title": "CRM Casa Noturna"
+      "name": "cabaret-da-cecilia-crm",
+      "version": "0.2.0",
+      "title": "Cabaret da Cecília · CRM"
     },
     "tools": [
       {
@@ -309,6 +309,306 @@
           "readOnlyHint": true,
           "idempotentHint": true,
           "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "evento_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            }
+          },
+          "required": [
+            "evento_id"
+          ]
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "listar_artistas",
+        "title": "Listar artistas",
+        "description": "Lista as atrações/artistas do cabaret (drag, burlescas, DJs, músicos, MCs).",
+        "annotations": {
+          "readOnlyHint": true
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "ativos": {
+              "description": "Se true, retorna apenas artistas ativos.",
+              "type": "boolean"
+            }
+          }
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "criar_artista",
+        "title": "Criar artista",
+        "description": "Cadastra uma nova atração/artista do cabaret (drag, burlesca, DJ, músico, MC).",
+        "annotations": {
+          "readOnlyHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "nome": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tipo": {
+              "default": "outro",
+              "description": "drag, burlesca, mc, danca, musica, teatro, outro",
+              "type": "string"
+            },
+            "contato": {
+              "type": "string"
+            },
+            "instagram": {
+              "type": "string"
+            },
+            "descricao": {
+              "type": "string"
+            },
+            "ativo": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "nome"
+          ]
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "atualizar_artista",
+        "title": "Atualizar artista",
+        "description": "Atualiza os dados de uma atração/artista do cabaret.",
+        "annotations": {
+          "readOnlyHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "patch": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tipo": {
+                  "type": "string"
+                },
+                "contato": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "instagram": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "descricao": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "ativo": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "required": [
+            "id",
+            "patch"
+          ]
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "adicionar_artista_evento",
+        "title": "Adicionar artista a uma noite",
+        "description": "Vincula uma atração/artista a um evento (noite), com horário de apresentação e cachê.",
+        "annotations": {
+          "readOnlyHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "evento_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "artista_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "horario": {
+              "description": "Início da apresentação em ISO 8601.",
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+            },
+            "cache": {
+              "description": "Cachê em reais.",
+              "type": "number"
+            },
+            "ordem": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "evento_id",
+            "artista_id"
+          ]
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "programacao_evento",
+        "title": "Programação de uma noite",
+        "description": "Lista a programação de atrações/artistas de um evento (noite), com horário e cachê.",
+        "annotations": {
+          "readOnlyHint": true
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "evento_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            }
+          },
+          "required": [
+            "evento_id"
+          ]
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "listar_ingressos",
+        "title": "Listar ingressos",
+        "description": "Lista os tipos de ingresso (pista, camarote, inteira, meia, cortesia) de um evento.",
+        "annotations": {
+          "readOnlyHint": true
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "evento_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            }
+          }
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "vender_ingresso",
+        "title": "Vender ingresso",
+        "description": "Registra a venda de ingressos de um tipo para um evento, sem exceder a quantidade disponível.",
+        "annotations": {
+          "readOnlyHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "qtd": {
+              "default": 1,
+              "description": "Quantidade de ingressos vendidos.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "lotacao_evento",
+        "title": "Lotação de um evento",
+        "description": "Informa a lotação de um evento: ingressos vendidos vs. quantidade e capacidade da casa.",
+        "annotations": {
+          "readOnlyHint": true
         },
         "inputSchema": {
           "$schema": "http://json-schema.org/draft-07/schema#",

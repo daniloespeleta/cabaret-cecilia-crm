@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AuthenticatedAtracoesRouteImport } from './routes/_authenticated/atracoes'
 import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticated/clientes'
 import { Route as AuthenticatedComandasRouteImport } from './routes/_authenticated/comandas'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -56,6 +57,11 @@ const Char91DotwellKnownChar93OauthProtectedResourceRoute =
     path: '/.well-known/oauth-protected-resource',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedAtracoesRoute = AuthenticatedAtracoesRouteImport.update({
+  id: '/atracoes',
+  path: '/atracoes',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedClientesRoute = AuthenticatedClientesRouteImport.update({
   id: '/clientes',
   path: '/clientes',
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/mcp': typeof McpRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/atracoes': typeof AuthenticatedAtracoesRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/comandas': typeof AuthenticatedComandasRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/mcp': typeof McpRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/atracoes': typeof AuthenticatedAtracoesRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/comandas': typeof AuthenticatedComandasRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/mcp': typeof McpRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/_authenticated/atracoes': typeof AuthenticatedAtracoesRoute
   '/_authenticated/clientes': typeof AuthenticatedClientesRoute
   '/_authenticated/comandas': typeof AuthenticatedComandasRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/atracoes'
     | '/clientes'
     | '/comandas'
     | '/dashboard'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/atracoes'
     | '/clientes'
     | '/comandas'
     | '/dashboard'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/_authenticated/atracoes'
     | '/_authenticated/clientes'
     | '/_authenticated/comandas'
     | '/_authenticated/dashboard'
@@ -259,6 +271,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/.well-known/oauth-protected-resource'
       preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/atracoes': {
+      id: '/_authenticated/atracoes'
+      path: '/atracoes'
+      fullPath: '/atracoes'
+      preLoaderRoute: typeof AuthenticatedAtracoesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/clientes': {
       id: '/_authenticated/clientes'
@@ -327,6 +346,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAtracoesRoute: typeof AuthenticatedAtracoesRoute
   AuthenticatedClientesRoute: typeof AuthenticatedClientesRoute
   AuthenticatedComandasRoute: typeof AuthenticatedComandasRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -337,6 +357,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAtracoesRoute: AuthenticatedAtracoesRoute,
   AuthenticatedClientesRoute: AuthenticatedClientesRoute,
   AuthenticatedComandasRoute: AuthenticatedComandasRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,

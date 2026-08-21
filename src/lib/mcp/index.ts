@@ -17,6 +17,14 @@ import fecharComandaTool from "./tools/fechar-comanda";
 import faturamentoPeriodoTool from "./tools/faturamento-periodo";
 import topClientesTool from "./tools/top-clientes";
 import comissoesPromoterTool from "./tools/comissoes-promoter";
+import listarArtistasTool from "./tools/listar-artistas";
+import criarArtistaTool from "./tools/criar-artista";
+import atualizarArtistaTool from "./tools/atualizar-artista";
+import adicionarArtistaEventoTool from "./tools/adicionar-artista-evento";
+import programacaoEventoTool from "./tools/programacao-evento";
+import listarIngressosTool from "./tools/listar-ingressos";
+import venderIngressoTool from "./tools/vender-ingresso";
+import lotacaoEventoTool from "./tools/lotacao-evento";
 
 // Read via import.meta.env so Vite inlines the literal at build time.
 // The fallback keeps the issuer well-formed if the literal is unset during
@@ -24,13 +32,15 @@ import comissoesPromoterTool from "./tools/comissoes-promoter";
 const projectRef = import.meta.env["VITE_SUPABASE_PROJECT_ID"] ?? "project-ref-unset";
 
 export default defineMcp({
-  name: "casa-noturna-crm",
-  title: "CRM Casa Noturna",
-  version: "0.1.0",
+  name: "cabaret-da-cecilia-crm",
+  title: "Cabaret da Cecília · CRM",
+  version: "0.2.0",
   instructions:
-    "CRM da casa noturna. Gerencie clientes, eventos/atrações, comandas (consumo) e a guest list. " +
-    "Use listar_clientes e criar_cliente para cadastros, listar_eventos e criar_evento para a agenda, " +
-    "listar_guest_list / adicionar_convidado / marcar_entrada para a porta, e as ferramentas de comanda " +
+    "CRM do Cabaret da Cecília. Gerencie fregueses/clientes, noites e atrações, comandas (consumo), " +
+    "bilheteria e guest list. Use listar_clientes/criar_cliente para cadastros, listar_eventos/criar_evento " +
+    "para a agenda, listar_artistas/adicionar_artista_evento/programacao_evento para a programação da noite, " +
+    "listar_ingressos/vender_ingresso/lotacao_evento para bilheteria e lotação, " +
+    "listar_guest_list/adicionar_convidado/marcar_entrada para a portaria, e as ferramentas de comanda " +
     "para abrir, adicionar itens e fechar contas. faturamento_periodo, top_clientes e comissoes_promoter " +
     "geram relatórios. As ações agem como o usuário autenticado, respeitando os papéis do CRM.",
   auth: auth.oauth.issuer({
@@ -45,6 +55,14 @@ export default defineMcp({
     listarEventosTool,
     criarEventoTool,
     detalharEventoTool,
+    listarArtistasTool,
+    criarArtistaTool,
+    atualizarArtistaTool,
+    adicionarArtistaEventoTool,
+    programacaoEventoTool,
+    listarIngressosTool,
+    venderIngressoTool,
+    lotacaoEventoTool,
     listarGuestListTool,
     adicionarConvidadoTool,
     confirmarConvidadoTool,

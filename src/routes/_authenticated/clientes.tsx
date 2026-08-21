@@ -58,7 +58,7 @@ function ClientesPage() {
   return (
     <div>
       <header className="mb-6">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">Clientes</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-foreground">Fregueses</h1>
         <p className="mt-1 text-muted-foreground">Cadastro e preferências dos clientes da casa.</p>
       </header>
 
