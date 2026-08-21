@@ -23,7 +23,7 @@ export default defineTool({
     for (const c of data ?? []) {
       if (!c.cliente_id) continue;
       const nome = (c.clientes as unknown as { nome?: string } | null)?.nome ?? "Cliente";
-      porCliente[c.cliente_id] = porCliente[c.cliente_id] ?? { nome, total: 0 };
+      if (!porCliente[c.cliente_id]) porCliente[c.cliente_id] = { nome, total: 0 };
       const entry = porCliente[c.cliente_id];
       entry.total += c.valor_total ?? 0;
     }

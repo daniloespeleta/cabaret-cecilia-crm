@@ -22,14 +22,16 @@ export default defineTool({
     for (const c of convidados ?? []) {
       if (!c.promoter_id) continue;
       const p = c.promoters as unknown as { nome?: string; taxa_comissao?: number } | null;
-      porPromoter[c.promoter_id] = porPromoter[c.promoter_id] ?? {
-        nome: p?.nome ?? "Promoter",
-        taxa: p?.taxa_comissao ?? 0,
-        presentes: 0,
-        total: 0,
-      };
+      if (!porPromoter[c.promoter_id]) {
+        porPromoter[c.promoter_id] = {
+          nome: p?.nome ?? "Promoter",
+          taxa: p?.taxa_comissao ?? 0,
+          presentes: 0,
+          total: 0,
+        };
+      }
+      const entry = porPromoter[c.promoter_id];
       if (c.status === "entrou") {
-        const entry = porPromoter[c.promoter_id];
         entry.presentes += 1;
         entry.total += entry.taxa;
       }
