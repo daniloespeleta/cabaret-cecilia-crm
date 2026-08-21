@@ -24,7 +24,7 @@ export default defineTool({
       if (!c.cliente_id) continue;
       const nome = (c.clientes as unknown as { nome?: string } | null)?.nome ?? "Cliente";
       if (!porCliente[c.cliente_id]) porCliente[c.cliente_id] = { nome, total: 0 };
-      const entry = porCliente[c.cliente_id];
+      const entry = porCliente[c.cliente_id]!;
       entry.total += c.valor_total ?? 0;
     }
     const ranking = Object.values(porCliente).sort((a, b) => b.total - a.total).slice(0, limite ?? 10);

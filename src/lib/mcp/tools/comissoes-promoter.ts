@@ -30,7 +30,7 @@ export default defineTool({
           total: 0,
         };
       }
-      const entry = porPromoter[c.promoter_id];
+      const entry = porPromoter[c.promoter_id]!;
       if (c.status === "entrou") {
         entry.presentes += 1;
         entry.total += entry.taxa;
