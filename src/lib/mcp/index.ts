@@ -32,13 +32,15 @@ import lotacaoEventoTool from "./tools/lotacao-evento";
 const projectRef = import.meta.env["VITE_SUPABASE_PROJECT_ID"] ?? "project-ref-unset";
 
 export default defineMcp({
-  name: "casa-noturna-crm",
-  title: "CRM Casa Noturna",
-  version: "0.1.0",
+  name: "cabaret-da-cecilia-crm",
+  title: "Cabaret da Cecília · CRM",
+  version: "0.2.0",
   instructions:
-    "CRM da casa noturna. Gerencie clientes, eventos/atrações, comandas (consumo) e a guest list. " +
-    "Use listar_clientes e criar_cliente para cadastros, listar_eventos e criar_evento para a agenda, " +
-    "listar_guest_list / adicionar_convidado / marcar_entrada para a porta, e as ferramentas de comanda " +
+    "CRM do Cabaret da Cecília. Gerencie fregueses/clientes, noites e atrações, comandas (consumo), " +
+    "bilheteria e guest list. Use listar_clientes/criar_cliente para cadastros, listar_eventos/criar_evento " +
+    "para a agenda, listar_artistas/adicionar_artista_evento/programacao_evento para a programação da noite, " +
+    "listar_ingressos/vender_ingresso/lotacao_evento para bilheteria e lotação, " +
+    "listar_guest_list/adicionar_convidado/marcar_entrada para a portaria, e as ferramentas de comanda " +
     "para abrir, adicionar itens e fechar contas. faturamento_periodo, top_clientes e comissoes_promoter " +
     "geram relatórios. As ações agem como o usuário autenticado, respeitando os papéis do CRM.",
   auth: auth.oauth.issuer({
@@ -53,6 +55,14 @@ export default defineMcp({
     listarEventosTool,
     criarEventoTool,
     detalharEventoTool,
+    listarArtistasTool,
+    criarArtistaTool,
+    atualizarArtistaTool,
+    adicionarArtistaEventoTool,
+    programacaoEventoTool,
+    listarIngressosTool,
+    venderIngressoTool,
+    lotacaoEventoTool,
     listarGuestListTool,
     adicionarConvidadoTool,
     confirmarConvidadoTool,
