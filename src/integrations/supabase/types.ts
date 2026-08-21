@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      artistas: {
+        Row: {
+          ativo: boolean
+          contato: string | null
+          created_at: string
+          criado_por: string | null
+          descricao: string | null
+          id: string
+          instagram: string | null
+          nome: string
+          tipo: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          contato?: string | null
+          created_at?: string
+          criado_por?: string | null
+          descricao?: string | null
+          id?: string
+          instagram?: string | null
+          nome: string
+          tipo?: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          contato?: string | null
+          created_at?: string
+          criado_por?: string | null
+          descricao?: string | null
+          id?: string
+          instagram?: string | null
+          nome?: string
+          tipo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       clientes: {
         Row: {
           created_at: string
@@ -97,6 +136,51 @@ export type Database = {
           },
           {
             foreignKeyName: "comandas_evento_id_fkey"
+            columns: ["evento_id"]
+            isOneToOne: false
+            referencedRelation: "eventos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      evento_artistas: {
+        Row: {
+          artista_id: string
+          cache: number
+          created_at: string
+          evento_id: string
+          horario: string | null
+          id: string
+          ordem: number
+        }
+        Insert: {
+          artista_id: string
+          cache?: number
+          created_at?: string
+          evento_id: string
+          horario?: string | null
+          id?: string
+          ordem?: number
+        }
+        Update: {
+          artista_id?: string
+          cache?: number
+          created_at?: string
+          evento_id?: string
+          horario?: string | null
+          id?: string
+          ordem?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "evento_artistas_artista_id_fkey"
+            columns: ["artista_id"]
+            isOneToOne: false
+            referencedRelation: "artistas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "evento_artistas_evento_id_fkey"
             columns: ["evento_id"]
             isOneToOne: false
             referencedRelation: "eventos"
@@ -193,6 +277,50 @@ export type Database = {
             columns: ["promoter_id"]
             isOneToOne: false
             referencedRelation: "promoters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ingressos: {
+        Row: {
+          created_at: string
+          criado_por: string | null
+          evento_id: string
+          id: string
+          preco: number
+          quantidade: number
+          tipo: string
+          updated_at: string
+          vendidos: number
+        }
+        Insert: {
+          created_at?: string
+          criado_por?: string | null
+          evento_id: string
+          id?: string
+          preco?: number
+          quantidade?: number
+          tipo?: string
+          updated_at?: string
+          vendidos?: number
+        }
+        Update: {
+          created_at?: string
+          criado_por?: string | null
+          evento_id?: string
+          id?: string
+          preco?: number
+          quantidade?: number
+          tipo?: string
+          updated_at?: string
+          vendidos?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ingressos_evento_id_fkey"
+            columns: ["evento_id"]
+            isOneToOne: false
+            referencedRelation: "eventos"
             referencedColumns: ["id"]
           },
         ]
