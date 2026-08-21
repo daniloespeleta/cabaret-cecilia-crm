@@ -31,7 +31,13 @@ export const criarClienteFn = createServerFn({ method: "POST" })
 
 export const atualizarClienteFn = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: { id: string; patch: Record<string, unknown> }) => d)
+  .inputValidator((d: {
+    id: string;
+    patch: {
+      nome?: string; telefone?: string | null; email?: string | null;
+      preferencias?: string | null; tags?: string[] | null; observacoes?: string | null;
+    };
+  }) => d)
   .handler(async ({ data, context }) => {
     const { data: row, error } = await context.supabase
       .from("clientes")
