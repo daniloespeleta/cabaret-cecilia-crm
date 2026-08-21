@@ -48,7 +48,7 @@ function EventosPage() {
     queryFn: () => fetchEventos({ data: { apenasProximos } }),
   });
   const { data: artistas = [] } = useQuery({ queryKey: ["artistas"], queryFn: () => fetchArtistas({ data: {} }) });
-  const { data: lotacao = {} } = useQuery({ queryKey: ["lotacao"], queryFn: () => fetchLotacao({ data: {} }) });
+  const { data: lotacao = {} } = useQuery({ queryKey: ["lotacao"], queryFn: () => fetchLotacao() });
 
   const abertoEvent = eventos.find((e: any) => e.id === aberto);
   const { data: programacao = [] } = useQuery({

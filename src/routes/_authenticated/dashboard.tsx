@@ -22,7 +22,7 @@ function Dashboard() {
   const { data: comandas = [] } = useQuery({ queryKey: ["comandas"], queryFn: () => fetchComandas({ data: {} }) });
   const { data: eventos = [] } = useQuery({ queryKey: ["eventos"], queryFn: () => fetchEventos({ data: {} }) });
   const { data: guest = [] } = useQuery({ queryKey: ["guest-list"], queryFn: () => fetchGuest({ data: {} }) });
-  const { data: lotacao = {} } = useQuery({ queryKey: ["lotacao"], queryFn: () => fetchLotacao({ data: {} }) });
+  const { data: lotacao = {} } = useQuery({ queryKey: ["lotacao"], queryFn: () => fetchLotacao() });
 
   const proximos = eventos.filter((e: any) => new Date(e.data_hora) >= new Date())
     .sort((a: any, b: any) => new Date(a.data_hora).getTime() - new Date(b.data_hora).getTime());
