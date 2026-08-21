@@ -18,6 +18,7 @@ import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } fr
 import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticated/clientes'
 import { Route as AuthenticatedComandasRouteImport } from './routes/_authenticated/comandas'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedEquipeRouteImport } from './routes/_authenticated/equipe'
 import { Route as AuthenticatedEventosRouteImport } from './routes/_authenticated/eventos'
 import { Route as AuthenticatedGuestListRouteImport } from './routes/_authenticated/guest-list'
 import { Route as AuthenticatedPromotersRouteImport } from './routes/_authenticated/promoters'
@@ -70,6 +71,11 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedEquipeRoute = AuthenticatedEquipeRouteImport.update({
+  id: '/equipe',
+  path: '/equipe',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedEventosRoute = AuthenticatedEventosRouteImport.update({
   id: '/eventos',
   path: '/eventos',
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/clientes': typeof AuthenticatedClientesRoute
   '/comandas': typeof AuthenticatedComandasRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/equipe': typeof AuthenticatedEquipeRoute
   '/eventos': typeof AuthenticatedEventosRoute
   '/guest-list': typeof AuthenticatedGuestListRoute
   '/promoters': typeof AuthenticatedPromotersRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/clientes': typeof AuthenticatedClientesRoute
   '/comandas': typeof AuthenticatedComandasRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/equipe': typeof AuthenticatedEquipeRoute
   '/eventos': typeof AuthenticatedEventosRoute
   '/guest-list': typeof AuthenticatedGuestListRoute
   '/promoters': typeof AuthenticatedPromotersRoute
@@ -138,6 +146,7 @@ export interface FileRoutesById {
   '/_authenticated/clientes': typeof AuthenticatedClientesRoute
   '/_authenticated/comandas': typeof AuthenticatedComandasRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/equipe': typeof AuthenticatedEquipeRoute
   '/_authenticated/eventos': typeof AuthenticatedEventosRoute
   '/_authenticated/guest-list': typeof AuthenticatedGuestListRoute
   '/_authenticated/promoters': typeof AuthenticatedPromotersRoute
@@ -155,6 +164,7 @@ export interface FileRouteTypes {
     | '/clientes'
     | '/comandas'
     | '/dashboard'
+    | '/equipe'
     | '/eventos'
     | '/guest-list'
     | '/promoters'
@@ -170,6 +180,7 @@ export interface FileRouteTypes {
     | '/clientes'
     | '/comandas'
     | '/dashboard'
+    | '/equipe'
     | '/eventos'
     | '/guest-list'
     | '/promoters'
@@ -186,6 +197,7 @@ export interface FileRouteTypes {
     | '/_authenticated/clientes'
     | '/_authenticated/comandas'
     | '/_authenticated/dashboard'
+    | '/_authenticated/equipe'
     | '/_authenticated/eventos'
     | '/_authenticated/guest-list'
     | '/_authenticated/promoters'
@@ -269,6 +281,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/equipe': {
+      id: '/_authenticated/equipe'
+      path: '/equipe'
+      fullPath: '/equipe'
+      preLoaderRoute: typeof AuthenticatedEquipeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/eventos': {
       id: '/_authenticated/eventos'
       path: '/eventos'
@@ -311,6 +330,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedClientesRoute: typeof AuthenticatedClientesRoute
   AuthenticatedComandasRoute: typeof AuthenticatedComandasRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedEquipeRoute: typeof AuthenticatedEquipeRoute
   AuthenticatedEventosRoute: typeof AuthenticatedEventosRoute
   AuthenticatedGuestListRoute: typeof AuthenticatedGuestListRoute
   AuthenticatedPromotersRoute: typeof AuthenticatedPromotersRoute
@@ -320,6 +340,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientesRoute: AuthenticatedClientesRoute,
   AuthenticatedComandasRoute: AuthenticatedComandasRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedEquipeRoute: AuthenticatedEquipeRoute,
   AuthenticatedEventosRoute: AuthenticatedEventosRoute,
   AuthenticatedGuestListRoute: AuthenticatedGuestListRoute,
   AuthenticatedPromotersRoute: AuthenticatedPromotersRoute,
