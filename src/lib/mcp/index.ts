@@ -17,6 +17,14 @@ import fecharComandaTool from "./tools/fechar-comanda";
 import faturamentoPeriodoTool from "./tools/faturamento-periodo";
 import topClientesTool from "./tools/top-clientes";
 import comissoesPromoterTool from "./tools/comissoes-promoter";
+import listarArtistasTool from "./tools/listar-artistas";
+import criarArtistaTool from "./tools/criar-artista";
+import atualizarArtistaTool from "./tools/atualizar-artista";
+import adicionarArtistaEventoTool from "./tools/adicionar-artista-evento";
+import programacaoEventoTool from "./tools/programacao-evento";
+import listarIngressosTool from "./tools/listar-ingressos";
+import venderIngressoTool from "./tools/vender-ingresso";
+import lotacaoEventoTool from "./tools/lotacao-evento";
 
 // Read via import.meta.env so Vite inlines the literal at build time.
 // The fallback keeps the issuer well-formed if the literal is unset during
