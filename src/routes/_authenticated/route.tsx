@@ -10,13 +10,6 @@ export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) throw redirect({ to: "/auth", search: { next: "/dashboard" } });
-    // Bootstrap: o primeiro usuário do sistema vira admin (idempotente).
-    try {
-      const res = await fetch("/_serverFn", { method: "POST", body: "" });
-      void res;
-    } catch {
-      // best-effort no pré-render
-    }
     return { user: data.user };
   },
   component: Layout,
