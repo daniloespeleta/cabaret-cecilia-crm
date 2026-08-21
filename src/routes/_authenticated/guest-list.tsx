@@ -91,19 +91,18 @@ function GuestListPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${badge[g.status] ?? badge.pendente}`}>
+                  <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${badge[g.status] ?? badge["pendente"]}`}>
                     {g.status.replace("_", " ")}
                   </span>
                   <select
                     value={g.status}
-                    onChange={(e) => statusMut.mutate({ id: g.id, status: e.target.value })}
+                    onChange={(e) => statusMut.mutate({ id: g.id, status: e.target.value as "pendente" | "confirmado" | "entrou" | "nao_compareceu" })}
                     className="rounded-lg border border-input bg-background px-2 py-1.5 text-sm"
                   >
                     <option value="pendente">Pendente</option>
                     <option value="confirmado">Confirmado</option>
-                    <option value="na_porta">Na porta</option>
                     <option value="entrou">Entrou</option>
-                    <option value="nao_veio">Não veio</option>
+                    <option value="nao_compareceu">Não compareceu</option>
                   </select>
                 </div>
               </li>
