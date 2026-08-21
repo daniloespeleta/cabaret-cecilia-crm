@@ -41,7 +41,11 @@
             }
           }
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "criar_cliente",
@@ -85,7 +89,11 @@
             "nome"
           ]
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "atualizar_cliente",
@@ -167,7 +175,11 @@
             "cliente_id"
           ]
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "historico_comandas_cliente",
@@ -192,7 +204,11 @@
             "cliente_id"
           ]
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "listar_eventos",
@@ -227,7 +243,11 @@
             }
           }
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "criar_evento",
@@ -275,7 +295,11 @@
             "data_hora"
           ]
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "detalhar_evento",
@@ -300,7 +324,11 @@
             "evento_id"
           ]
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "listar_guest_list",
@@ -334,7 +362,11 @@
             "evento_id"
           ]
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "adicionar_convidado",
@@ -371,7 +403,11 @@
             "nome"
           ]
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "confirmar_convidado",
@@ -404,7 +440,11 @@
             "status"
           ]
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "marcar_entrada",
@@ -427,7 +467,11 @@
             "convidado_id"
           ]
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "listar_comandas",
@@ -461,7 +505,11 @@
             }
           }
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "abrir_comanda",
@@ -490,7 +538,11 @@
             }
           }
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "adicionar_item",
@@ -529,7 +581,11 @@
             "valor_unitario"
           ]
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "fechar_comanda",
@@ -552,7 +608,11 @@
             "comanda_id"
           ]
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "faturamento_periodo",
@@ -585,7 +645,11 @@
             "data_fim"
           ]
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "top_clientes",
@@ -608,7 +672,11 @@
             }
           }
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       },
       {
         "name": "comissoes_promoter",
@@ -631,7 +699,11 @@
             }
           }
         },
-        "outputSchema": null
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        }
       }
     ]
   }

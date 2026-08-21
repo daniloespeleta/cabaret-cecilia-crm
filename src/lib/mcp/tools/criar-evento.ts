@@ -15,6 +15,7 @@ export default defineTool({
     capacidade: z.number().int().optional(),
     status: z.string().default("agendado"),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: false },
   handler: async (input, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };

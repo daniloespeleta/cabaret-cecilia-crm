@@ -14,6 +14,7 @@ export default defineTool({
     tags: z.array(z.string()).optional().describe("Etiquetas: vip, regular, primeira_vez etc."),
     observacoes: z.string().optional(),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: false },
   handler: async ({ nome, telefone, email, preferencias, tags, observacoes }, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };

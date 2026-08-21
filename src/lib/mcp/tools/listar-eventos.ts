@@ -11,6 +11,7 @@ export default defineTool({
     proximos: z.boolean().optional().describe("Se true, retorna apenas eventos futuros."),
     limite: z.number().int().min(1).max(100).optional(),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ status, proximos, limite }, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };

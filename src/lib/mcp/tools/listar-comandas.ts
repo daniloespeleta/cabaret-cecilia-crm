@@ -11,6 +11,7 @@ export default defineTool({
     cliente_id: z.string().uuid().optional(),
     limite: z.number().int().min(1).max(100).optional(),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ status, cliente_id, limite }, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };

@@ -9,6 +9,7 @@ export default defineTool({
   inputSchema: {
     comanda_id: z.string().uuid(),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: false },
   handler: async ({ comanda_id }, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };

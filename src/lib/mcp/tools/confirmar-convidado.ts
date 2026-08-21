@@ -10,6 +10,7 @@ export default defineTool({
     convidado_id: z.string().uuid(),
     status: z.enum(["pendente", "confirmado", "entrou", "nao_compareceu"]),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: false },
   handler: async ({ convidado_id, status }, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };

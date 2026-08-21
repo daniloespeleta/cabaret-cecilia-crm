@@ -11,6 +11,7 @@ export default defineTool({
     evento_id: z.string().uuid().optional(),
     mesa: z.string().optional().describe("Número ou nome da mesa/camarote."),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: false },
   handler: async ({ cliente_id, evento_id, mesa }, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };

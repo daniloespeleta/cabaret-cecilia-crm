@@ -10,6 +10,7 @@ export default defineTool({
     data_inicio: z.string().datetime().describe("Início do período em ISO 8601."),
     data_fim: z.string().datetime().describe("Fim do período em ISO 8601."),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ data_inicio, data_fim }, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };

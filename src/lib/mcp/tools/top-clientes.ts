@@ -9,6 +9,7 @@ export default defineTool({
   inputSchema: {
     limite: z.number().int().min(1).max(50).optional().describe("Quantos clientes retornar (padrão 10)."),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ limite }, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };

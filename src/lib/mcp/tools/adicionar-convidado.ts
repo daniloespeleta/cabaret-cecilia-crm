@@ -12,6 +12,7 @@ export default defineTool({
     telefone: z.string().optional(),
     promoter_id: z.string().uuid().optional().describe("ID do promoter responsável pelo convidado."),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: false },
   handler: async ({ evento_id, nome, telefone, promoter_id }, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };

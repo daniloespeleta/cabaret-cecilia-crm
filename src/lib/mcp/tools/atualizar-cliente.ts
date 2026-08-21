@@ -15,6 +15,7 @@ export default defineTool({
     tags: z.array(z.string()).nullable().optional(),
     observacoes: z.string().nullable().optional(),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: false },
   handler: async (input, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };

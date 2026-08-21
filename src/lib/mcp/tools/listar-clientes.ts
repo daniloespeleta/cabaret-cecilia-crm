@@ -10,6 +10,7 @@ export default defineTool({
     busca: z.string().optional().describe("Texto para filtrar por nome."),
     limite: z.number().int().min(1).max(100).optional().describe("Máximo de registros (padrão 50)."),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ busca, limite }, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };

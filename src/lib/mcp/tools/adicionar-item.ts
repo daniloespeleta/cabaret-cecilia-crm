@@ -12,6 +12,7 @@ export default defineTool({
     quantidade: z.number().int().min(1).default(1),
     valor_unitario: z.number().min(0),
   },
+  outputSchema: {},
   annotations: { readOnlyHint: false },
   handler: async ({ comanda_id, descricao, quantidade, valor_unitario }, ctx) => {
     if (!ctx.isAuthenticated()) return { content: [{ type: "text", text: "Não autenticado" }], isError: true };
