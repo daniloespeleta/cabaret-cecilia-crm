@@ -12,7 +12,7 @@ function PromotersPage() {
   const fetchPromoters = useServerFn(listarPromotersFn);
   const fetchGuest = useServerFn(listarGuestListFn);
 
-  const { data: promoters = [] } = useQuery({ queryKey: ["promoters"], queryFn: () => fetchPromoters({ data: {} }) });
+  const { data: promoters = [] } = useQuery({ queryKey: ["promoters"], queryFn: () => fetchPromoters() });
   const { data: guest = [] } = useQuery({ queryKey: ["guest-list"], queryFn: () => fetchGuest({ data: {} }) });
 
   const stats = promoters.map((p: any) => {

@@ -28,7 +28,7 @@ function GuestListPage() {
     queryFn: () => fetchGuest({ data: eventoId ? { evento_id: eventoId } : {} }),
   });
   const { data: eventos = [] } = useQuery({ queryKey: ["eventos"], queryFn: () => fetchEventos({ data: {} }) });
-  const { data: promoters = [] } = useQuery({ queryKey: ["promoters"], queryFn: () => fetchPromoters({ data: {} }) });
+  const { data: promoters = [] } = useQuery({ queryKey: ["promoters"], queryFn: () => fetchPromoters() });
 
   const addMut = useMutation({
     mutationFn: () => adicionar({ data: { evento_id: eventoId, nome, telefone: telefone || null, promoter_id: promoterId || null } }),
