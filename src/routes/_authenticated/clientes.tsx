@@ -26,7 +26,7 @@ function ClientesPage() {
 
   const { data: clientes = [] } = useQuery({
     queryKey: ["clientes"],
-    queryFn: () => fetchClientes(),
+    queryFn: () => fetchClientes({ data: {} }),
   });
 
   const filtered = busca

@@ -11,7 +11,7 @@ function validateNext(value: unknown): string {
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
-  validateSearch: (s: Record<string, unknown>) => ({ next: validateNext(s.next) }),
+  validateSearch: (s: Record<string, unknown>) => ({ next: validateNext(s["next"]) }),
   component: AuthPage,
 });
 

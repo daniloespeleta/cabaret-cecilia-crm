@@ -15,9 +15,9 @@ function Dashboard() {
   const fetchEventos = useServerFn(listarEventosFn);
   const fetchGuest = useServerFn(listarGuestListFn);
 
-  const { data: comandas = [] } = useQuery({ queryKey: ["comandas"], queryFn: () => fetchComandas() });
-  const { data: eventos = [] } = useQuery({ queryKey: ["eventos"], queryFn: () => fetchEventos() });
-  const { data: guest = [] } = useQuery({ queryKey: ["guest-list"], queryFn: () => fetchGuest() });
+  const { data: comandas = [] } = useQuery({ queryKey: ["comandas"], queryFn: () => fetchComandas({ data: {} }) });
+  const { data: eventos = [] } = useQuery({ queryKey: ["eventos"], queryFn: () => fetchEventos({ data: {} }) });
+  const { data: guest = [] } = useQuery({ queryKey: ["guest-list"], queryFn: () => fetchGuest({ data: {} }) });
 
   const abertas = comandas.filter((c: any) => c.status === "aberta");
   const faturado = comandas.filter((c: any) => c.status === "fechada")
