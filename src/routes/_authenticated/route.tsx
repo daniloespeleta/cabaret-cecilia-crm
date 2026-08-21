@@ -29,8 +29,19 @@ const NAV = [
 function Layout() {
   const { user } = Route.useRouteContext();
   const fetchRoles = useServerFn(meusRolesFn);
-  const { data: roles = [] } = useQuery({ queryKey: ["meus-roles"], queryFn: () => fetchRoles() });
+  const grantAdmin = useServerFn(grantFirstAdminFn);
+  const { data: roles = [], refetch } = useQuery({ queryKey: ["meus-roles"], queryFn: () => fetchRoles() });
   const isAdmin = roles.includes("admin");
+
+  // Bootstrap: garante que o primeiro usuário do sistema seja admin.
+  const bootstrapMut = useMutation({
+    mutationFn: () => grantAdmin(),
+    onSuccess: () => refetch(),
+  });
+  useEffect(() => {
+    if (!isAdmin) bootstrapMut.mutate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAdmin]);
 
   async function signOut() {
     await supabase.auth.signOut();
