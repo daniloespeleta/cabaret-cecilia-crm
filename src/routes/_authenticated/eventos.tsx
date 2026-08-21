@@ -36,7 +36,7 @@ function EventosPage() {
   });
 
   const toggleMut = useMutation({
-    mutationFn: ({ id, patch }: { id: string; patch: Record<string, unknown> }) => atualizar({ data: { id, patch } }),
+    mutationFn: ({ id, patch }: { id: string; patch: { status: string } }) => atualizar({ data: { id, patch } }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["eventos"] }),
   });
 
