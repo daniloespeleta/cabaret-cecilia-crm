@@ -25,10 +25,10 @@ function GuestListPage() {
 
   const { data: guest = [] } = useQuery({
     queryKey: ["guest-list", eventoId],
-    queryFn: () => fetchGuest({ data: { evento_id: eventoId || undefined } }),
+    queryFn: () => fetchGuest({ data: eventoId ? { evento_id: eventoId } : {} }),
   });
-  const { data: eventos = [] } = useQuery({ queryKey: ["eventos"], queryFn: () => fetchEventos() });
-  const { data: promoters = [] } = useQuery({ queryKey: ["promoters"], queryFn: () => fetchPromoters() });
+  const { data: eventos = [] } = useQuery({ queryKey: ["eventos"], queryFn: () => fetchEventos({ data: {} }) });
+  const { data: promoters = [] } = useQuery({ queryKey: ["promoters"], queryFn: () => fetchPromoters({ data: {} }) });
 
   const addMut = useMutation({
     mutationFn: () => adicionar({ data: { evento_id: eventoId, nome, telefone: telefone || null, promoter_id: promoterId || null } }),
@@ -39,16 +39,16 @@ function GuestListPage() {
   });
 
   const statusMut = useMutation({
-    mutationFn: ({ id, status }: { id: string; status: string }) => atualizar({ data: { id, patch: { status } } }),
+    mutationFn: ({ id, status }: { id: string; status: "pendente" | "confirmado" | "entrou" | "nao_compareceu" }) =>
+      atualizar({ data: { id, patch: { status } } }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["guest-list"] }),
   });
 
   const badge: Record<string, string> = {
     pendente: "bg-muted text-muted-foreground",
     confirmado: "bg-primary/15 text-primary",
-    na_porta: "bg-amber-500/15 text-amber-500",
     entrou: "bg-emerald-500/15 text-emerald-500",
-    nao_veio: "bg-destructive/10 text-destructive",
+    nao_compareceu: "bg-destructive/10 text-destructive",
   };
 
   const entradas = guest.filter((g: any) => g.status === "entrou").length;
