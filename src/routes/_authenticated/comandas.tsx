@@ -31,9 +31,9 @@ function ComandasPage() {
   const fetchClientes = useServerFn(listarClientesFn);
   const fetchEventos = useServerFn(listarEventosFn);
 
-  const { data: comandas = [] } = useQuery({ queryKey: ["comandas"], queryFn: () => fetchComandas() });
-  const { data: clientes = [] } = useQuery({ queryKey: ["clientes"], queryFn: () => fetchClientes() });
-  const { data: eventos = [] } = useQuery({ queryKey: ["eventos"], queryFn: () => fetchEventos() });
+  const { data: comandas = [] } = useQuery({ queryKey: ["comandas"], queryFn: () => fetchComandas({ data: {} }) });
+  const { data: clientes = [] } = useQuery({ queryKey: ["clientes"], queryFn: () => fetchClientes({ data: {} }) });
+  const { data: eventos = [] } = useQuery({ queryKey: ["eventos"], queryFn: () => fetchEventos({ data: {} }) });
   const { data: itens = [] } = useQuery({
     queryKey: ["itens", selId],
     queryFn: () => (selId ? fetchItens({ data: { comanda_id: selId } }) : Promise.resolve([])),
