@@ -29,8 +29,9 @@ export default defineTool({
         total: 0,
       };
       if (c.status === "entrou") {
-        porPromoter[c.promoter_id].presentes += 1;
-        porPromoter[c.promoter_id].total += porPromoter[c.promoter_id].taxa;
+        const entry = porPromoter[c.promoter_id];
+        entry.presentes += 1;
+        entry.total += entry.taxa;
       }
     }
     const resultado = Object.values(porPromoter);
