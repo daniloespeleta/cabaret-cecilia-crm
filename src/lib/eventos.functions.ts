@@ -30,7 +30,13 @@ export const criarEventoFn = createServerFn({ method: "POST" })
 
 export const atualizarEventoFn = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: { id: string; patch: Record<string, unknown> }) => d)
+  .inputValidator((d: {
+    id: string;
+    patch: {
+      nome?: string; data_hora?: string; tipo?: string; artista?: string | null;
+      local?: string | null; capacidade?: number | null; status?: string;
+    };
+  }) => d)
   .handler(async ({ data, context }) => {
     const { data: row, error } = await context.supabase
       .from("eventos")

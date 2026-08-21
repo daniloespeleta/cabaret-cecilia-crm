@@ -30,7 +30,13 @@ export const adicionarConvidadoFn = createServerFn({ method: "POST" })
 
 export const atualizarConvidadoFn = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: { id: string; patch: Record<string, unknown> }) => d)
+  .inputValidator((d: {
+    id: string;
+    patch: {
+      status?: "pendente" | "confirmado" | "entrou" | "nao_compareceu";
+      telefone?: string | null; nome?: string; promoter_id?: string | null;
+    };
+  }) => d)
   .handler(async ({ data, context }) => {
     const { data: row, error } = await context.supabase
       .from("guest_list").update(data.patch).eq("id", data.id).select().single();
