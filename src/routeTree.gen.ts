@@ -19,6 +19,8 @@ import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedComandasRouteImport } from './routes/_authenticated/comandas'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedEventosRouteImport } from './routes/_authenticated/eventos'
+import { Route as AuthenticatedGuestListRouteImport } from './routes/_authenticated/guest-list'
+import { Route as AuthenticatedPromotersRouteImport } from './routes/_authenticated/promoters'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
@@ -73,6 +75,16 @@ const AuthenticatedEventosRoute = AuthenticatedEventosRouteImport.update({
   path: '/eventos',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedGuestListRoute = AuthenticatedGuestListRouteImport.update({
+  id: '/guest-list',
+  path: '/guest-list',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPromotersRoute = AuthenticatedPromotersRouteImport.update({
+  id: '/promoters',
+  path: '/promoters',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
   id: '/.lovable/oauth/consent',
   path: '/.lovable/oauth/consent',
@@ -95,6 +107,8 @@ export interface FileRoutesByFullPath {
   '/comandas': typeof AuthenticatedComandasRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/eventos': typeof AuthenticatedEventosRoute
+  '/guest-list': typeof AuthenticatedGuestListRoute
+  '/promoters': typeof AuthenticatedPromotersRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
@@ -108,6 +122,8 @@ export interface FileRoutesByTo {
   '/comandas': typeof AuthenticatedComandasRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/eventos': typeof AuthenticatedEventosRoute
+  '/guest-list': typeof AuthenticatedGuestListRoute
+  '/promoters': typeof AuthenticatedPromotersRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
@@ -123,6 +139,8 @@ export interface FileRoutesById {
   '/_authenticated/comandas': typeof AuthenticatedComandasRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/eventos': typeof AuthenticatedEventosRoute
+  '/_authenticated/guest-list': typeof AuthenticatedGuestListRoute
+  '/_authenticated/promoters': typeof AuthenticatedPromotersRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
@@ -138,6 +156,8 @@ export interface FileRouteTypes {
     | '/comandas'
     | '/dashboard'
     | '/eventos'
+    | '/guest-list'
+    | '/promoters'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
   fileRoutesByTo: FileRoutesByTo
@@ -151,6 +171,8 @@ export interface FileRouteTypes {
     | '/comandas'
     | '/dashboard'
     | '/eventos'
+    | '/guest-list'
+    | '/promoters'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
   id:
@@ -165,6 +187,8 @@ export interface FileRouteTypes {
     | '/_authenticated/comandas'
     | '/_authenticated/dashboard'
     | '/_authenticated/eventos'
+    | '/_authenticated/guest-list'
+    | '/_authenticated/promoters'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
   fileRoutesById: FileRoutesById
@@ -252,6 +276,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEventosRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/guest-list': {
+      id: '/_authenticated/guest-list'
+      path: '/guest-list'
+      fullPath: '/guest-list'
+      preLoaderRoute: typeof AuthenticatedGuestListRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/promoters': {
+      id: '/_authenticated/promoters'
+      path: '/promoters'
+      fullPath: '/promoters'
+      preLoaderRoute: typeof AuthenticatedPromotersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/.lovable/oauth/consent': {
       id: '/.lovable/oauth/consent'
       path: '/.lovable/oauth/consent'
@@ -274,6 +312,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedComandasRoute: typeof AuthenticatedComandasRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedEventosRoute: typeof AuthenticatedEventosRoute
+  AuthenticatedGuestListRoute: typeof AuthenticatedGuestListRoute
+  AuthenticatedPromotersRoute: typeof AuthenticatedPromotersRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -281,6 +321,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedComandasRoute: AuthenticatedComandasRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedEventosRoute: AuthenticatedEventosRoute,
+  AuthenticatedGuestListRoute: AuthenticatedGuestListRoute,
+  AuthenticatedPromotersRoute: AuthenticatedPromotersRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
