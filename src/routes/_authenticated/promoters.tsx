@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { listarPromotersFn } from "@/lib/promoters.functions";
-import { listarComandasFn } from "@/lib/comandas.functions";
 import { listarGuestListFn } from "@/lib/guest-list.functions";
 
 export const Route = createFileRoute("/_authenticated/promoters")({
@@ -11,28 +10,22 @@ export const Route = createFileRoute("/_authenticated/promoters")({
 
 function PromotersPage() {
   const fetchPromoters = useServerFn(listarPromotersFn);
-  const fetchComandas = useServerFn(listarComandasFn);
   const fetchGuest = useServerFn(listarGuestListFn);
 
   const { data: promoters = [] } = useQuery({ queryKey: ["promoters"], queryFn: () => fetchPromoters() });
-  const { data: comandas = [] } = useQuery({ queryKey: ["comandas"], queryFn: () => fetchComandas() });
   const { data: guest = [] } = useQuery({ queryKey: ["guest-list"], queryFn: () => fetchGuest() });
 
-  const promotersById = new Map(promoters.map((p: any) => [p.id, p]));
-
   const stats = promoters.map((p: any) => {
-    const trazidos = guest.filter((g: any) => g.promoter_id === p.id && g.status === "entrou").length;
-    const comissoes = comandas
-      .filter((c: any) => c.promoter_id === p.id && c.status === "fechada")
-      .reduce((s: number, c: any) => s + Number(c.valor_total || 0) * Number(p.taxa_comissao || 0) / 100, 0);
-    return { ...p, trazidos, comissoes };
+    const presentes = guest.filter((g: any) => g.promoter_id === p.id && g.status === "entrou").length;
+    const estimado = presentes * Number(p.taxa_comissao || 0);
+    return { ...p, presentes, estimado };
   });
 
   return (
     <div>
       <header className="mb-6">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">Promoters</h1>
-        <p className="mt-1 text-muted-foreground">Desempenho: convidados trazidos e comissões estimadas.</p>
+        <p className="mt-1 text-muted-foreground">Desempenho: convidados presentes e comissão estimada por entrada.</p>
       </header>
 
       {promoters.length === 0 ? (
@@ -54,17 +47,15 @@ function PromotersPage() {
               {p.telefone && <div className="mt-1 text-sm text-muted-foreground">{p.telefone}</div>}
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <div className="rounded-lg bg-muted p-3">
-                  <div className="text-xs text-muted-foreground">Convidados (entraram)</div>
-                  <div className="text-xl font-bold text-foreground">{p.trazidos}</div>
+                  <div className="text-xs text-muted-foreground">Presentes</div>
+                  <div className="text-xl font-bold text-foreground">{p.presentes}</div>
                 </div>
                 <div className="rounded-lg bg-muted p-3">
-                  <div className="text-xs text-muted-foreground">Comissões estimadas</div>
-                  <div className="text-xl font-bold text-foreground">R$ {p.comissoes.toFixed(2)}</div>
+                  <div className="text-xs text-muted-foreground">Comissão estimada</div>
+                  <div className="text-xl font-bold text-foreground">R$ {p.estimado.toFixed(2)}</div>
                 </div>
               </div>
-              <div className="mt-3 text-xs text-muted-foreground">
-                {promotersById.size ? `${promotersById.size} promoters ativos` : ""}
-              </div>
+              <div className="mt-3 text-xs text-muted-foreground">{p.ativo ? "Ativo" : "Inativo"}</div>
             </div>
           ))}
         </div>
