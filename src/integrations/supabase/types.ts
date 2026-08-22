@@ -53,6 +53,36 @@ export type Database = {
         }
         Relationships: []
       }
+      auditoria: {
+        Row: {
+          acao: string
+          ator_id: string | null
+          created_at: string
+          detalhes: Json
+          entidade: string
+          entidade_id: string | null
+          id: string
+        }
+        Insert: {
+          acao: string
+          ator_id?: string | null
+          created_at?: string
+          detalhes?: Json
+          entidade: string
+          entidade_id?: string | null
+          id?: string
+        }
+        Update: {
+          acao?: string
+          ator_id?: string | null
+          created_at?: string
+          detalhes?: Json
+          entidade?: string
+          entidade_id?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
       clientes: {
         Row: {
           created_at: string
@@ -142,6 +172,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      convites: {
+        Row: {
+          aceito_em: string | null
+          aceito_por: string | null
+          convidado_por: string | null
+          created_at: string
+          email: string
+          expira_em: string
+          id: string
+          roles: Database["public"]["Enums"]["app_role"][]
+          status: string
+          token: string
+          updated_at: string
+        }
+        Insert: {
+          aceito_em?: string | null
+          aceito_por?: string | null
+          convidado_por?: string | null
+          created_at?: string
+          email: string
+          expira_em?: string
+          id?: string
+          roles?: Database["public"]["Enums"]["app_role"][]
+          status?: string
+          token?: string
+          updated_at?: string
+        }
+        Update: {
+          aceito_em?: string | null
+          aceito_por?: string | null
+          convidado_por?: string | null
+          created_at?: string
+          email?: string
+          expira_em?: string
+          id?: string
+          roles?: Database["public"]["Enums"]["app_role"][]
+          status?: string
+          token?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       evento_artistas: {
         Row: {
