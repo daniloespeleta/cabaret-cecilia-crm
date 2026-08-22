@@ -1,10 +1,8 @@
 import { createFileRoute, Outlet, redirect, Link } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { meusRolesFn } from "@/lib/promoters.functions";
-import { grantFirstAdminFn } from "@/lib/admin.functions";
+import { grantFirstAdminFn, statusOnboardingFn } from "@/lib/admin.functions";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
@@ -27,25 +25,119 @@ const NAV = [
   { to: "/equipe", label: "Equipe", icon: "☰" },
 ];
 
+async function signOut() {
+  await supabase.auth.signOut();
+  window.location.href = "/auth";
+}
+
+function Onboarding({
+  temAdmin,
+  email,
+  onAssumir,
+  carregando,
+  erro,
+}: {
+  temAdmin: boolean;
+  email: string;
+  onAssumir: () => void;
+  carregando: boolean;
+  erro: string | null;
+}) {
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-background p-6">
+      <div className="w-full max-w-lg rounded-2xl border border-border bg-card/80 p-8 shadow-2xl backdrop-blur">
+        <div className="mb-6 flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary text-xl text-primary-foreground">
+            🎭
+          </div>
+          <div>
+            <div className="font-display text-lg font-bold text-foreground">Cabaret da Cecília</div>
+            <div className="text-xs text-muted-foreground">Primeiro acesso · {email}</div>
+          </div>
+        </div>
+
+        {temAdmin ? (
+          <>
+            <h1 className="font-display text-2xl font-bold text-foreground">Aguardando liberação</h1>
+            <p className="mt-2 text-sm text-muted-foreground">
+              A direção da casa já foi definida. Peça a quem administra o CRM para liberar seu papel
+              (direção, promoter ou operação) na tela de Equipe.
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 className="font-display text-2xl font-bold text-foreground">Assuma a direção da casa</h1>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Ninguém administra este CRM ainda. Ao confirmar, sua conta vira a direção do Cabaret da
+              Cecília, com acesso a fregueses, comandas, noites, portaria, bilheteria e liberação da
+              equipe.
+            </p>
+            <ul className="mt-4 space-y-1.5 text-sm text-muted-foreground">
+              <li>★ Acesso total ao painel e às ferramentas de IA</li>
+              <li>★ Permissão para cadastrar promoters e operação</li>
+              <li>★ Relatórios de faturamento, lotação e comissões</li>
+            </ul>
+            <button
+              onClick={onAssumir}
+              disabled={carregando}
+              className="mt-6 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
+            >
+              {carregando ? "Configurando..." : "Assumir como direção"}
+            </button>
+          </>
+        )}
+
+        {erro && (
+          <p role="alert" className="mt-4 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+            {erro}
+          </p>
+        )}
+
+        <button
+          onClick={signOut}
+          className="mt-4 w-full text-center text-sm text-muted-foreground hover:text-foreground"
+        >
+          Sair
+        </button>
+      </div>
+    </main>
+  );
+}
+
 function Layout() {
   const { user } = Route.useRouteContext();
-  const fetchRoles = useServerFn(meusRolesFn);
+  const fetchStatus = useServerFn(statusOnboardingFn);
   const grantAdmin = useServerFn(grantFirstAdminFn);
-  const { data: roles = [], refetch } = useQuery({ queryKey: ["meus-roles"], queryFn: () => fetchRoles() });
+  const { data: status, isLoading, refetch } = useQuery({
+    queryKey: ["onboarding-status"],
+    queryFn: () => fetchStatus(),
+  });
+  const roles = status?.roles ?? [];
   const isAdmin = roles.includes("admin");
 
   const bootstrapMut = useMutation({
     mutationFn: () => grantAdmin(),
     onSuccess: () => refetch(),
   });
-  useEffect(() => {
-    if (!isAdmin) bootstrapMut.mutate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAdmin]);
 
-  async function signOut() {
-    await supabase.auth.signOut();
-    window.location.href = "/auth";
+  if (isLoading || !status) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background text-sm text-muted-foreground">
+        Abrindo as cortinas...
+      </div>
+    );
+  }
+
+  if (roles.length === 0) {
+    return (
+      <Onboarding
+        temAdmin={status.temAdmin}
+        email={status.email || (user.email ?? "")}
+        onAssumir={() => bootstrapMut.mutate()}
+        carregando={bootstrapMut.isPending}
+        erro={bootstrapMut.error ? (bootstrapMut.error as Error).message : null}
+      />
+    );
   }
 
   return (

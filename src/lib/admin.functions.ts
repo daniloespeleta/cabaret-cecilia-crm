@@ -21,6 +21,27 @@ export const grantFirstAdminFn = createServerFn({ method: "POST" })
     return { granted: true };
   });
 
+// Estado do onboarding: papéis do usuário atual e se a casa já tem uma direção.
+export const statusOnboardingFn = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { data: roles, error } = await context.supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", context.userId);
+    if (error) throw error;
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { count } = await supabaseAdmin
+      .from("user_roles")
+      .select("id", { count: "exact", head: true })
+      .eq("role", "admin");
+    return {
+      roles: (roles ?? []).map((r) => r.role as string),
+      temAdmin: (count ?? 0) > 0,
+      email: (context.claims as { email?: string } | null)?.email ?? "",
+    };
+  });
+
 // Atribui/remove papéis. Somente admin. Usa service_role para escrita segura
 // (user_roles não tem política INSERT para o próprio usuário).
 export const gerenciarRoleFn = createServerFn({ method: "POST" })
