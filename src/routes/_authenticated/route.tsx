@@ -23,6 +23,7 @@ const NAV = [
   { to: "/guest-list", label: "Portaria", icon: "◉" },
   { to: "/promoters", label: "Promoters", icon: "✦" },
   { to: "/equipe", label: "Equipe", icon: "☰" },
+  { to: "/auditoria", label: "Auditoria", icon: "◎" },
 ];
 
 async function signOut() {
