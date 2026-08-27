@@ -17,6 +17,7 @@ import { Route as McpRouteImport } from './routes/mcp'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AuthenticatedAtracoesRouteImport } from './routes/_authenticated/atracoes'
+import { Route as AuthenticatedAuditoriaRouteImport } from './routes/_authenticated/auditoria'
 import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticated/clientes'
 import { Route as AuthenticatedComandasRouteImport } from './routes/_authenticated/comandas'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -66,6 +67,11 @@ const Char91DotwellKnownChar93OauthProtectedResourceRoute =
 const AuthenticatedAtracoesRoute = AuthenticatedAtracoesRouteImport.update({
   id: '/atracoes',
   path: '/atracoes',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAuditoriaRoute = AuthenticatedAuditoriaRouteImport.update({
+  id: '/auditoria',
+  path: '/auditoria',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedClientesRoute = AuthenticatedClientesRouteImport.update({
@@ -123,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/atracoes': typeof AuthenticatedAtracoesRoute
+  '/auditoria': typeof AuthenticatedAuditoriaRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/comandas': typeof AuthenticatedComandasRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -141,6 +148,7 @@ export interface FileRoutesByTo {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/atracoes': typeof AuthenticatedAtracoesRoute
+  '/auditoria': typeof AuthenticatedAuditoriaRoute
   '/clientes': typeof AuthenticatedClientesRoute
   '/comandas': typeof AuthenticatedComandasRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -161,6 +169,7 @@ export interface FileRoutesById {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/atracoes': typeof AuthenticatedAtracoesRoute
+  '/_authenticated/auditoria': typeof AuthenticatedAuditoriaRoute
   '/_authenticated/clientes': typeof AuthenticatedClientesRoute
   '/_authenticated/comandas': typeof AuthenticatedComandasRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/atracoes'
+    | '/auditoria'
     | '/clientes'
     | '/comandas'
     | '/dashboard'
@@ -199,6 +209,7 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/atracoes'
+    | '/auditoria'
     | '/clientes'
     | '/comandas'
     | '/dashboard'
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/_authenticated/atracoes'
+    | '/_authenticated/auditoria'
     | '/_authenticated/clientes'
     | '/_authenticated/comandas'
     | '/_authenticated/dashboard'
@@ -299,6 +311,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAtracoesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/auditoria': {
+      id: '/_authenticated/auditoria'
+      path: '/auditoria'
+      fullPath: '/auditoria'
+      preLoaderRoute: typeof AuthenticatedAuditoriaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/clientes': {
       id: '/_authenticated/clientes'
       path: '/clientes'
@@ -367,6 +386,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAtracoesRoute: typeof AuthenticatedAtracoesRoute
+  AuthenticatedAuditoriaRoute: typeof AuthenticatedAuditoriaRoute
   AuthenticatedClientesRoute: typeof AuthenticatedClientesRoute
   AuthenticatedComandasRoute: typeof AuthenticatedComandasRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -378,6 +398,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAtracoesRoute: AuthenticatedAtracoesRoute,
+  AuthenticatedAuditoriaRoute: AuthenticatedAuditoriaRoute,
   AuthenticatedClientesRoute: AuthenticatedClientesRoute,
   AuthenticatedComandasRoute: AuthenticatedComandasRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
