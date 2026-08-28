@@ -180,11 +180,13 @@ export type Database = {
           convidado_por: string | null
           created_at: string
           email: string
+          envios: number
           expira_em: string
           id: string
           roles: Database["public"]["Enums"]["app_role"][]
           status: string
           token: string
+          ultimo_envio_em: string | null
           updated_at: string
         }
         Insert: {
@@ -193,11 +195,13 @@ export type Database = {
           convidado_por?: string | null
           created_at?: string
           email: string
+          envios?: number
           expira_em?: string
           id?: string
           roles?: Database["public"]["Enums"]["app_role"][]
           status?: string
           token?: string
+          ultimo_envio_em?: string | null
           updated_at?: string
         }
         Update: {
@@ -206,11 +210,43 @@ export type Database = {
           convidado_por?: string | null
           created_at?: string
           email?: string
+          envios?: number
           expira_em?: string
           id?: string
           roles?: Database["public"]["Enums"]["app_role"][]
           status?: string
           token?: string
+          ultimo_envio_em?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      email_templates: {
+        Row: {
+          assunto: string
+          chave: string
+          corpo: string
+          created_at: string
+          id: string
+          nome: string
+          updated_at: string
+        }
+        Insert: {
+          assunto: string
+          chave: string
+          corpo: string
+          created_at?: string
+          id?: string
+          nome: string
+          updated_at?: string
+        }
+        Update: {
+          assunto?: string
+          chave?: string
+          corpo?: string
+          created_at?: string
+          id?: string
+          nome?: string
           updated_at?: string
         }
         Relationships: []
