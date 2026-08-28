@@ -43,7 +43,18 @@ const ACAO_LABEL: Record<string, string> = {
   convite_aceito: "Convite aceito",
 };
 
-function resumo(item: { acao: string; detalhes: Record<string, unknown>; evento: string | null; artista: string | null }) {
+type AuditItem = {
+  id: string;
+  acao: string;
+  entidade: string;
+  created_at: string;
+  ator: string;
+  evento: string | null;
+  artista: string | null;
+  detalhes: Record<string, string | number | boolean | null | string[]>;
+};
+
+function resumo(item: { acao: string; detalhes: AuditItem["detalhes"]; evento: string | null; artista: string | null }) {
   const d = item.detalhes;
   const evento = item.evento ? ` · ${item.evento}` : "";
   switch (item.acao) {
@@ -71,9 +82,9 @@ function resumo(item: { acao: string; detalhes: Record<string, unknown>; evento:
 function AuditoriaPage() {
   const [entidade, setEntidade] = useState("");
   const fetchAuditoria = useServerFn(listarAuditoriaFn);
-  const { data: itens = [], isLoading, error } = useQuery({
+  const { data: itens = [], isLoading, error } = useQuery<AuditItem[]>({
     queryKey: ["auditoria", entidade],
-    queryFn: () => fetchAuditoria({ data: entidade ? { entidade } : {} }),
+    queryFn: () => fetchAuditoria({ data: entidade ? { entidade } : {} }) as Promise<AuditItem[]>,
   });
 
   return (
