@@ -82,9 +82,9 @@ function resumo(item: { acao: string; detalhes: AuditItem["detalhes"]; evento: s
 function AuditoriaPage() {
   const [entidade, setEntidade] = useState("");
   const fetchAuditoria = useServerFn(listarAuditoriaFn);
-  const { data: itens = [], isLoading, error } = useQuery({
+  const { data: itens = [], isLoading, error } = useQuery<AuditItem[]>({
     queryKey: ["auditoria", entidade],
-    queryFn: () => fetchAuditoria({ data: entidade ? { entidade } : {} }),
+    queryFn: () => fetchAuditoria({ data: entidade ? { entidade } : {} }) as Promise<AuditItem[]>,
   });
 
   return (
