@@ -53,7 +53,7 @@ export const listarAuditoriaFn = createServerFn({ method: "POST" })
         ator: r.ator_id ? emails.get(r.ator_id as string) ?? "sistema" : "sistema",
         evento: typeof det["evento_id"] === "string" ? nomeEvento.get(det["evento_id"]) ?? null : null,
         artista: typeof det["artista_id"] === "string" ? nomeArtista.get(det["artista_id"]) ?? null : null,
-        detalhes: det,
+        detalhes: det as Record<string, string | number | boolean | null | string[]>,
       };
     });
   });
