@@ -25,6 +25,7 @@ import { Route as AuthenticatedEquipeRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedEventosRouteImport } from './routes/_authenticated/eventos'
 import { Route as AuthenticatedGuestListRouteImport } from './routes/_authenticated/guest-list'
 import { Route as AuthenticatedPromotersRouteImport } from './routes/_authenticated/promoters'
+import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
@@ -109,6 +110,11 @@ const AuthenticatedPromotersRoute = AuthenticatedPromotersRouteImport.update({
   path: '/promoters',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedRelatoriosRoute = AuthenticatedRelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
   id: '/.lovable/oauth/consent',
   path: '/.lovable/oauth/consent',
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/eventos': typeof AuthenticatedEventosRoute
   '/guest-list': typeof AuthenticatedGuestListRoute
   '/promoters': typeof AuthenticatedPromotersRoute
+  '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
@@ -156,6 +163,7 @@ export interface FileRoutesByTo {
   '/eventos': typeof AuthenticatedEventosRoute
   '/guest-list': typeof AuthenticatedGuestListRoute
   '/promoters': typeof AuthenticatedPromotersRoute
+  '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
@@ -177,6 +185,7 @@ export interface FileRoutesById {
   '/_authenticated/eventos': typeof AuthenticatedEventosRoute
   '/_authenticated/guest-list': typeof AuthenticatedGuestListRoute
   '/_authenticated/promoters': typeof AuthenticatedPromotersRoute
+  '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
@@ -198,6 +207,7 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/guest-list'
     | '/promoters'
+    | '/relatorios'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
   fileRoutesByTo: FileRoutesByTo
@@ -217,6 +227,7 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/guest-list'
     | '/promoters'
+    | '/relatorios'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
   id:
@@ -237,6 +248,7 @@ export interface FileRouteTypes {
     | '/_authenticated/eventos'
     | '/_authenticated/guest-list'
     | '/_authenticated/promoters'
+    | '/_authenticated/relatorios'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
   fileRoutesById: FileRoutesById
@@ -367,6 +379,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPromotersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/relatorios': {
+      id: '/_authenticated/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof AuthenticatedRelatoriosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/.lovable/oauth/consent': {
       id: '/.lovable/oauth/consent'
       path: '/.lovable/oauth/consent'
@@ -394,6 +413,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedEventosRoute: typeof AuthenticatedEventosRoute
   AuthenticatedGuestListRoute: typeof AuthenticatedGuestListRoute
   AuthenticatedPromotersRoute: typeof AuthenticatedPromotersRoute
+  AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -406,6 +426,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedEventosRoute: AuthenticatedEventosRoute,
   AuthenticatedGuestListRoute: AuthenticatedGuestListRoute,
   AuthenticatedPromotersRoute: AuthenticatedPromotersRoute,
+  AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
