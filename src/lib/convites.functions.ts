@@ -119,3 +119,70 @@ export const aceitarConviteFn = createServerFn({ method: "POST" })
     });
     return { ok: true, roles };
   });
+
+// --- Reenvio e modelos de e-mail ---
+
+export const registrarEnvioConviteFn = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { id: string }) => d)
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context);
+    const { data: atual, error: e1 } = await context.supabase
+      .from("convites")
+      .select("envios")
+      .eq("id", data.id)
+      .single();
+    if (e1) throw e1;
+    const { data: row, error } = await context.supabase
+      .from("convites")
+      .update({ envios: (atual?.envios ?? 0) + 1, ultimo_envio_em: new Date().toISOString() })
+      .eq("id", data.id)
+      .select()
+      .single();
+    if (error) throw error;
+    return row;
+  });
+
+export const reenviarConviteFn = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { id: string }) => d)
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context);
+    const expira = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
+    const { data: row, error } = await context.supabase
+      .from("convites")
+      .update({ status: "pendente", expira_em: expira })
+      .eq("id", data.id)
+      .select()
+      .single();
+    if (error) throw error;
+    return row;
+  });
+
+export const listarTemplatesFn = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertAdmin(context);
+    const { data, error } = await context.supabase.from("email_templates").select("*").order("chave");
+    if (error) throw error;
+    return data;
+  });
+
+export const salvarTemplateFn = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { id: string; assunto: string; corpo: string }) => {
+    if (!d.assunto.trim()) throw new Error("O assunto não pode ficar vazio.");
+    if (!d.corpo.includes("{{link}}")) throw new Error("O texto precisa conter {{link}}.");
+    return d;
+  })
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context);
+    const { data: row, error } = await context.supabase
+      .from("email_templates")
+      .update({ assunto: data.assunto, corpo: data.corpo })
+      .eq("id", data.id)
+      .select()
+      .single();
+    if (error) throw error;
+    return row;
+  });
